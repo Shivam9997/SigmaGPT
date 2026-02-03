@@ -52,16 +52,8 @@ A full-stack chat application powered by AI.
    npm run dev
    ```
 
-## Environment Variables
 
-Make sure to never commit your `.env` file to version control. Use the `.env.example` file as a template.
 
-## Security Note
-
-If you've accidentally committed sensitive data to Git history:
-1. Rotate all exposed credentials immediately
-2. Use `git filter-branch` or BFG Repo-Cleaner to remove sensitive data from history
-3. Force push the cleaned history
 
 ## Technologies Used
 
