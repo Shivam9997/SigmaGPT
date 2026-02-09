@@ -50,7 +50,7 @@ A full-stack chat application powered by AI.
 3. Start the development server:
    ```bash
    npm run dev
-   ```
+
 
 
 
