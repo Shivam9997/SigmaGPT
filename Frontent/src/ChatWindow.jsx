@@ -1,23 +1,22 @@
 import "./ChatWindow.css";
 import Chat from "./Chat.jsx"
 import { MyContext } from "./MyContext.jsx";
-import { useContext, useState, useEffect} from "react";
-import { ScaleLoader} from  "react-spinners";
+import { useContext, useState, useEffect } from "react";
+import { ScaleLoader } from "react-spinners";
 import { getAuthHeaders, API_BASE_URL } from "./utils/api.js";
 
-function ChatWindow() {
-   const {prompt , setPrompt, reply, setReply, currThreadId, prevChats, setPrevChats, setNewChat} = useContext(MyContext);
+function ChatWindow({ onMenuClick }) {
+   const { prompt, setPrompt, reply, setReply, currThreadId, prevChats, setPrevChats, setNewChat } = useContext(MyContext);
    const [loading, setLoading] = useState(false)
 
-   const getReply = async ()=>{
+   const getReply = async () => {
     if (!prompt.trim()) return;
 
     setLoading(true)
     setNewChat(false)
 
-    console.log("message", prompt,"threadId", currThreadId)
     const option = {
-        method:"POST",
+        method: "POST",
         headers: getAuthHeaders(),
         body: JSON.stringify({
             message: prompt,
@@ -33,7 +32,6 @@ function ChatWindow() {
         }
         
         const res = await response.json();
-        console.log(res)
         setReply(res.reply);
     } catch (error) {
         console.log(error)
@@ -42,47 +40,54 @@ function ChatWindow() {
    }
 
    // Append new chat to prevChats
- useEffect(() => {
-  if (prompt && reply) {
-    setPrevChats(prev => [
-      ...(Array.isArray(prev) ? prev : []),
-      { role: "user", content: prompt },
-      { role: "assistant", content: reply }
-    ]);
-  }
+   useEffect(() => {
+    if (prompt && reply) {
+      setPrevChats(prev => [
+        ...(Array.isArray(prev) ? prev : []),
+        { role: "user", content: prompt },
+        { role: "assistant", content: reply }
+      ]);
+    }
 
-  setPrompt("");
-}, [reply]);
-
-
+    setPrompt("");
+  }, [reply]);
 
 
     return (
         <div className="chatWindow">
             <div className="navbar">
-                <span>SigmaGPT</span>
-                <div className="uerIconDiv">
-                <span className="userIcon">👤</span>
+                <div className="nav-left">
+                    <button className="hamburger" onClick={onMenuClick} aria-label="Open sidebar">
+                        <i className="fa-solid fa-bars"></i>
+                    </button>
+                    <span className="brand">SigmaGPT</span>
+                </div>
+                <div className="userIconDiv">
+                    <span className="userIcon">👤</span>
                 </div>
             </div>
-            <Chat></Chat>
-                     
-                <ScaleLoader color="#fff" loading={loading} >
-                
-                </ScaleLoader> 
+
+            <div className="chat-area">
+                <Chat />
+                {loading && (
+                    <div className="loader-wrapper">
+                        <ScaleLoader color="#ececec" loading={loading} height={18} />
+                    </div>
+                )}
+            </div>
+
             <div className="chatInput">
                 <div className="inputBox">
-                    <input placeholder="Ask anything"
-                    value={prompt}
-                    onChange={(e)=> setPrompt(e.target.value)}
-                    onKeyDown={(e)=> e.key === 'Enter'? getReply() : ''}
-                    >
-                            
-                    </input>
+                    <input 
+                        placeholder="Ask anything"
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' ? getReply() : null}
+                    />
                     <div id="submit" onClick={getReply}>➤</div>
                 </div>
                 <p className="info">
-                    SigmaGPT can make mistakes. Check important info. see Cookie Preference
+                    SigmaGPT can make mistakes. Check important info.
                 </p>
             </div>
         </div>
