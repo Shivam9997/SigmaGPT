@@ -3,18 +3,30 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #f5f5f5;
+  background: #181818;
   padding: 20px;
 }
 
 .login-box {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ddd;
-  padding: 40px;
+  background: #1e1e1e;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid #2a2a2a;
+  padding: 40px 36px;
   width: 100%;
   max-width: 420px;
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .login-header {
@@ -23,63 +35,65 @@
 }
 
 .login-header h1 {
-  font-size: 28px;
-  font-weight: 600;
-  color: #222;
+  font-size: 30px;
+  font-weight: 700;
+  color: #ececec;
   margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
 .login-header p {
-  color: #666;
-  font-size: 16px;
+  color: #999;
+  font-size: 15px;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
 }
 
 .form-group label {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: #bbb;
 }
 
 .form-group input {
-  padding: 12px 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 12px 14px;
+  border: 1px solid #333;
+  border-radius: 8px;
   font-size: 15px;
-  transition: border-color 0.3s;
+  transition: border-color 0.25s, box-shadow 0.25s;
   font-family: inherit;
-  background-color: #fff;
-  color: #000;
+  background-color: #252525;
+  color: #ececec;
 }
 
 .form-group input::placeholder {
-  color: #999;
+  color: #666;
 }
 
 .form-group input:focus {
   outline: none;
   border-color: #4CAF50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
 }
 
 .error-message {
-  background: #ffebee;
-  color: #d32f2f;
+  background: rgba(211, 47, 47, 0.12);
+  color: #ef5350;
   padding: 12px;
-  border-radius: 4px;
-  font-size: 15px;
+  border-radius: 8px;
+  font-size: 14px;
   text-align: center;
-  border: 1px solid #ffcdd2;
+  border: 1px solid rgba(211, 47, 47, 0.25);
 }
 
 .submit-button {
@@ -87,47 +101,65 @@
   background: #4CAF50;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: 500;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 10px;
+  transition: background-color 0.25s, transform 0.15s;
+  margin-top: 6px;
 }
 
 .submit-button:hover:not(:disabled) {
-  background: #45a049;
+  background: #43a047;
+}
+
+.submit-button:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .submit-button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
-  background: #ccc;
+  background: #555;
 }
 
 .toggle-mode {
   text-align: center;
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid #e0e0e0;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid #2a2a2a;
 }
 
 .toggle-mode p {
-  color: #666;
-  font-size: 15px;
+  color: #888;
+  font-size: 14px;
 }
 
 .toggle-button {
   background: none;
   border: none;
   color: #4CAF50;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
   text-decoration: underline;
   padding: 0;
+  transition: color 0.2s;
 }
 
 .toggle-button:hover {
-  color: #45a049;
+  color: #66bb6a;
 }
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 28px 22px;
+    border-radius: 12px;
+  }
+
+  .login-header h1 {
+    font-size: 26px;
+  }
+}
+
