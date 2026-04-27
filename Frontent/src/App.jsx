@@ -17,6 +17,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Check if user is already logged in
   useEffect(() => {
@@ -40,6 +41,7 @@ function App() {
     setPrevChats([]);
     setAllThreads([]);
     setNewChat(true);
+    setSidebarOpen(false);
   };
 
   const providerValues = {
@@ -67,8 +69,8 @@ function App() {
     <MyContext.Provider value={providerValues}>
       {isAuthenticated ? (
         <>
-          <Sidebar />
-          <ChatWindow />
+          <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+          <ChatWindow onMenuClick={() => setSidebarOpen(true)} />
         </>
       ) : (
         <Login />
