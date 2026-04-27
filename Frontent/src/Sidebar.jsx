@@ -1,11 +1,11 @@
 import "./Sidebar.css"
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import {MyContext} from "./MyContext.jsx"
 import {v1 as uuidv1} from "uuid";
 import { getAuthHeaders, API_BASE_URL } from "./utils/api.js";
 
 
-function Sidebar() {
+function Sidebar({ isOpen, onClose }) {
   const {allThreads, setAllThreads, currThreadId, setNewChat,setPrompt,setReply, setCurrThreadId,setPrevChats, logout, user} = useContext(MyContext)
 
   const getAllThreads = async ()=>{
@@ -21,7 +21,6 @@ function Sidebar() {
       
       const res = await response.json();
       const filteredData = res.map(thread=> ({threadId: thread.threadId, title: thread.title}))
-      // console.log(filteredData);
       setAllThreads(filteredData);
       
     } catch (error) {
@@ -40,6 +39,7 @@ function Sidebar() {
       setReply(null);
       setCurrThreadId(uuidv1())
       setPrevChats([])
+      onClose && onClose();
      }
 
      const changeThread = async (newThreadId)=>{
@@ -55,10 +55,10 @@ function Sidebar() {
         }
         
         const res = await response.json();
-        // console.log(res);
         setPrevChats(res);
         setNewChat(false);
         setReply(null);
+        onClose && onClose();
 
       } catch (error) {
         console.log(error)
@@ -106,32 +106,39 @@ function Sidebar() {
      }
 
     return (
-      <section className="sidebar">
+      <>
+        <div 
+          className={`sidebar-overlay ${isOpen ? 'open' : ''}`}
+          onClick={onClose}
+        />
+        <section className={`sidebar ${isOpen ? 'open' : ''}`}>
 
-      <button onClick={createNewChat}>
-           <img src="src/assets/blacklogo.png" alt="gpt logo" className="logo"></img>
-         <span>✏️</span>
-      </button>
+          <button className="new-chat-btn" onClick={createNewChat}>
+            <img src="src/assets/blacklogo.png" alt="gpt logo" className="logo" />
+            <span>✏️</span>
+          </button>
           
-             <ul className="history">
-               {
-                 allThreads?.map((thread, idx)=> (
-                   <li key={idx}
-                   onClick={(e) =>changeThread(thread.threadId)}
-                  >
-                     {thread.title}
-                     <span className="delete-icon"
-                          onClick={(e) =>{
-                            e.stopPropagation();
-                            deleteThread(thread.threadId);
-                          }}
-                     >🗑️</span>
-                     </li>
-                 ))
-               }
-             </ul>
+          <ul className="history">
+            {
+              allThreads?.map((thread, idx)=> (
+                <li 
+                  key={idx}
+                  className={thread.threadId === currThreadId ? 'active' : ''}
+                  onClick={() => changeThread(thread.threadId)}
+                >
+                  {thread.title}
+                  <span className="delete-icon"
+                    onClick={(e) =>{
+                      e.stopPropagation();
+                      deleteThread(thread.threadId);
+                    }}
+                  >🗑️</span>
+                </li>
+              ))
+            }
+          </ul>
 
-        <div className="sign">
+          <div className="sign">
             <div className="user-info">
               <span className="username">👤 {user?.username}</span>
               <button onClick={handleLogout} className="logout-btn" title="Logout">
@@ -139,8 +146,9 @@ function Sidebar() {
               </button>
             </div>
             <p>By ApnaShivam ❤️</p>
-        </div>
-      </section>
+          </div>
+        </section>
+      </>
     )
 }
 
