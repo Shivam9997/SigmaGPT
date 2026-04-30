@@ -26,6 +26,7 @@ git push -u origin main
 ### A) Render.com pe jao: https://render.com
 ### B) "New" → "Web Service" select karo
 ### C) GitHub repo connect karo
+### D) **Important:** Root directory select karo: `Backend`
 
 **Settings:**
 - **Name:** `sigmagpt-backend`
@@ -33,6 +34,9 @@ git push -u origin main
 - **Build Command:** `npm install`
 - **Start Command:** `npm start`
 - **Plan:** Free
+
+**Note:** `Backend/.render.yaml` file automatically configure hoga. Agar nahi hota, toh manually yeh settings use karo:
+- **Root Directory:** `Backend` (ya `Back-end` jaisa folder name ho)
 
 **Environment Variables add karo:**
 ```
