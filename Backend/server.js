@@ -10,9 +10,14 @@ import authRoutes from "./routes/auth.js";
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+// Handle CORS origin - strip trailing slash if present
+const frontendUrl = process.env.FRONTEND_URL 
+  ? process.env.FRONTEND_URL.replace(/\/$/, "") 
+  : "http://localhost:5173";
+
 app.use(express.json());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: frontendUrl,
   credentials: true
 }));
 app.use(cookieParser());
