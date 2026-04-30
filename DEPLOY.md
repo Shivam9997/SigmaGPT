@@ -1,4 +1,4 @@
-# SigmaGPT Deployment Guide
+w e# SigmaGPT Deployment Guide
 
 Aapne bola tha ki aap khud deploy karenge, toh yeh complete guide hai.
 
@@ -35,6 +35,7 @@ git push -u origin main
 - **Start Command:** `npm start`
 - **Plan:** Free
 
+**Important:** Root Directory select karna zaroori hai!
 **Note:** `Backend/.render.yaml` file automatically configure hoga. Agar nahi hota, toh manually yeh settings use karo:
 - **Root Directory:** `Backend` (ya `Back-end` jaisa folder name ho)
 
