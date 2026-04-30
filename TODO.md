@@ -1,16 +1,21 @@
-# Responsive + UI Polish TODO
+# Vercel Deployment TODO
 
-## Plan
-Make the SigmaGPT frontend fully responsive (mobile/tablet/desktop) and improve overall UI/UX with modern styling, animations, and mobile sidebar.
+## Phase 1: Backend Production Setup
+- [ ] Add `start` script to `Backend/package.json`
+- [ ] Update CORS in `Backend/server.js` to allow production frontend URL
+- [ ] Make port dynamic using `process.env.PORT`
+- [ ] Create `Backend/.env.example`
 
-## Files to Edit
-- [x] `Frontent/src/index.css` — CSS variables, base resets
-- [x] `Frontent/src/App.css` — Responsive layout, mobile stacking
-- [x] `Frontent/src/App.jsx` — Wrapper class adjustments
-- [x] `Frontent/src/Sidebar.jsx` — Mobile toggle state & overlay logic
-- [x] `Frontent/src/Sidebar.css` — Slide-in overlay, responsive thread list, animations
-- [x] `Frontent/src/ChatWindow.jsx` — Sidebar toggle button in navbar
-- [x] `Frontent/src/ChatWindow.css` — Responsive navbar, sticky input, mobile padding
-- [x] `Frontent/src/Chat.css` — Responsive bubbles, code overflow, message spacing
-- [x] `Frontent/src/Login.css` — Dark theme polish, animations
+## Phase 2: Frontend Production Setup
+- [ ] Update `Frontent/src/utils/api.js` to use environment variable for API_BASE_URL
+- [ ] Update `Frontent/src/Login.jsx` to use API_BASE_URL instead of hardcoded localhost
+- [ ] Create `Frontent/.env.production` with deployed backend URL
+- [ ] Create `Frontent/vercel.json` for SPA routing
+
+## Phase 3: Deployment
+- [ ] Push code to GitHub
+- [ ] Deploy Backend to Render/Railway
+- [ ] Deploy Frontend to Vercel
+- [ ] Update environment variables on both platforms
+- [ ] Test the deployed application
 
