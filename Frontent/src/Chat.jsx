@@ -7,8 +7,9 @@ import "highlight.js/styles/github-dark.css"
 
 function Chat() {
     const { newChat, prevChats, reply } = useContext(MyContext);
-    const [latestReply, setLatestReply] = useState(null)
+    const [latestReply, setLatestReply] = useState(null);
 
+    // Show full response immediately without any animation
     useEffect(() => {
         if (reply === null) {
             setLatestReply(null);
@@ -16,15 +17,8 @@ function Chat() {
         }
         if (!prevChats?.length) return;
 
-        const content = reply.split(" ");
-        let idx = 0;
-        const interval = setInterval(() => {
-            setLatestReply(content.slice(0, idx + 1).join(" "));
-            idx++;
-            if (idx >= content.length) clearInterval(interval);
-        }, 40);
-
-        return () => clearInterval(interval)
+        // Show full response immediately
+        setLatestReply(reply);
     }, [prevChats, reply])
 
     return (
@@ -46,19 +40,15 @@ function Chat() {
                 }
                 {
                     prevChats.length > 0 && (
-                        <>
+                        <div className="gptDiv">
                             {
                                 latestReply === null ? (
-                                    <div className="gptDiv" key={"non-typing"}>
-                                        <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{prevChats[prevChats.length - 1].content}</ReactMarkdown>
-                                    </div>
+                                    <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{prevChats[prevChats.length - 1].content}</ReactMarkdown>
                                 ) : (
-                                    <div className="gptDiv" key={"typing"}>
-                                        <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{latestReply}</ReactMarkdown>
-                                    </div>
+                                    <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{latestReply}</ReactMarkdown>
                                 )
                             }
-                        </>
+                        </div>
                     )
                 }
             </div>
